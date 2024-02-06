@@ -1,33 +1,35 @@
+import 'package:aquaria/classes/user.dart';
 import 'package:aquaria/services/http_service.dart';
 
-import '../classes/user.dart';
-
-Future<int> registerUser(username, email, password, confirmPassword) async {
+Future<dynamic> registerUser(username, email, password, confirmPassword) async {
   if (password != confirmPassword) {
-    return 400;
+    return "Password dosen't match";
   }
 
   User user = User(username, email, password);
-  dynamic request = await createUser(user);
+  int? request = await createUser(user);
 
   if (request == 200) {
-    return 200;
+    print("User Registeres Successfully !!");
+    return user;
+  } else {
+    print("Failed to register !!");
+    return null;
   }
-
-  return 500;
 }
 
 Future<dynamic> loginUser(username, password) async {
-  User user = User(username, "", password);
-  dynamic request = await verifyUser(user);
+  //logika buat input (kalo mau)
 
-  if (request is User) {
-    return request;
+  User user = User(username, null, password);
+
+  int? request = await verifyUser(user);
+
+  if (request == 200) {
+    print("User Logged In Successfully");
+    return user;
+  } else {
+    print("Failed to Log In");
+    return null;
   }
-
-  return 400;
-}
-
-Future<int> timerFinished() async {
-  return 400;
 }

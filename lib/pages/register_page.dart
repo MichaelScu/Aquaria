@@ -1,3 +1,6 @@
+import 'package:aquaria/classes/user.dart';
+import 'package:aquaria/functions/functions.dart';
+
 import 'package:aquaria/pages/home_page.dart';
 import 'package:aquaria/pages/login_page.dart';
 import 'package:aquaria/widgets/bubble_text_field.dart';
@@ -9,13 +12,15 @@ class RegisterPage extends StatelessWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-
   RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff00B4ED),
+      // appBar: AppBar(
+      //   title: const Text("Login Page"),
+      // ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 140),
@@ -62,37 +67,38 @@ class RegisterPage extends StatelessWidget {
               const SizedBox(
                 height: 45,
               ),
-              MainButton(
+              GestureDetector(
                 onTap: () async {
-                  // // For deployment purposes
-                  // final username = _usernameController.text;
-                  // final email = _emailController.text;
-                  // final password = _passwordController.text;
-                  // final confirmPassword = _confirmPasswordController.text;
+                  final username = _usernameController.text;
+                  final email = _emailController.text;
+                  final password = _passwordController.text;
+                  final confirmPassword = _confirmPasswordController.text;
 
-                  // final response = await registerUser(
-                  //     username, email, password, confirmPassword);
+                  // print("$username - $email - $password - $confirmPassword");
 
-                  // if (response == 200) {
-                  //   Navigator.of(context).pushReplacement(
-                  //     MaterialPageRoute(
-                  //       builder: (BuildContext context) => const HomePage(),
-                  //     ),
-                  //   );
-                  // } else if (response == 400) {
-                  //   print("Password doesn't match!");
-                  // } else {
-                  //   print("Server trouble!");
-                  // }
+                  User? user = await registerUser(
+                      username, email, password, confirmPassword);
 
-                  // For development purposes
+                  if (user is User) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => const HomePage()),
+                    );
+                  } else {
+                    print("Registration Failed !!");
+                  }
+
+                  registerUser(username, email, password, confirmPassword);
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (BuildContext context) => const HomePage(),
                     ),
                   );
                 },
-                label: "Sign Up",
+                child: MainButton(
+                  label: "Sign Up",
+                ),
               ),
               const SizedBox(
                 height: 25,

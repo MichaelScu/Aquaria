@@ -1,3 +1,5 @@
+import 'package:aquaria/classes/user.dart';
+import 'package:aquaria/functions/functions.dart';
 import 'package:aquaria/pages/home_page.dart';
 import 'package:aquaria/pages/register_page.dart';
 import 'package:aquaria/widgets/bubble_text_field.dart';
@@ -14,6 +16,9 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff00B4ED),
+      // appBar: AppBar(
+      //   title: const Text("Login Page"),
+      // ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 160),
@@ -43,32 +48,26 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 45,
               ),
-              MainButton(
+              GestureDetector(
                 onTap: () async {
-                  // // For deployment purposes
-                  // final username = _usernameController.text;
-                  // final password = _passwordController.text;
+                  final username = _usernameController.text;
+                  final password = _passwordController.text;
 
-                  // final response = await loginUser(username, password);
+                  User? user = await loginUser(username, password);
 
-                  // if (response is User) {
-                  //   Navigator.of(context).pushReplacement(
-                  //     MaterialPageRoute(
-                  //       builder: (BuildContext context) => const HomePage(),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   print("Login Failed!");
-                  // }
-
-                  // For development purposes
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => const HomePage(),
-                    ),
-                  );
+                  if (user is User) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => const HomePage(),
+                      ),
+                    );
+                  } else {
+                    print("Login Failed !!");
+                  }
                 },
-                label: "Log In",
+                child: MainButton(
+                  label: "Log In",
+                ),
               ),
               const SizedBox(
                 height: 25,
@@ -98,6 +97,15 @@ class LoginPage extends StatelessWidget {
                   ),
                 ],
               ),
+              // const Positioned(
+              //   bottom: 0,
+              //   left: 0,
+              //   width: 100,
+              //   height: 100,
+              //   child: Image(
+              //     image: AssetImage("assets/waves.png"),
+              //   ),
+              // ),
             ],
           ),
         ),

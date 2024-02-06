@@ -3,24 +3,17 @@ import 'package:flutter/material.dart';
 class BubbleButton extends StatelessWidget {
   String label;
   Color color;
-  Color? secondaryColor;
   double length;
   Color textColor;
   TextEditingController? controller;
   String? type;
   IconData? icon;
-  EdgeInsetsGeometry padding;
 
   BubbleButton({
     super.key,
     this.controller,
     this.type,
     this.icon,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 15,
-      horizontal: 20,
-    ),
-    this.secondaryColor,
     required this.color,
     required this.label,
     required this.length,
@@ -35,7 +28,7 @@ class BubbleButton extends StatelessWidget {
           child: Container(
             width: length,
             decoration: BoxDecoration(
-              color: color,
+              color: Colors.white.withOpacity(0.3),
               borderRadius: BorderRadius.circular(30.0),
             ),
             child: Padding(
@@ -43,7 +36,7 @@ class BubbleButton extends StatelessWidget {
               child: Container(
                 width: length,
                 decoration: BoxDecoration(
-                  color: secondaryColor ?? color,
+                  color: Colors.white.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 child: (type == "TextField" ? isTextField() : isButton()),
@@ -85,7 +78,10 @@ class BubbleButton extends StatelessWidget {
 
   Widget isButton() {
     return Padding(
-      padding: padding,
+      padding: const EdgeInsets.symmetric(
+        vertical: 15,
+        horizontal: 20,
+      ),
       child: Row(
         children: [
           icon == null
